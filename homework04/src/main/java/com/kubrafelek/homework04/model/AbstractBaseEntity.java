@@ -27,4 +27,6 @@ public abstract class AbstractBaseEntity {
     @Column(name = "last_modified_date")
     @JsonIgnore
     private Instant lastModifiedDate = Instant.now();
+
+    public abstract int calculateStudentAge();
 }

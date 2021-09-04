@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InstructorAppErrorResponse {
+public class AppErrorResponse {
     private int status;
     private String message;
     private long timestamp;
