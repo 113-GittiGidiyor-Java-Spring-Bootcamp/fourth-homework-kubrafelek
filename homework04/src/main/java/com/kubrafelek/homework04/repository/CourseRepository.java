@@ -14,5 +14,4 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("SELECT COUNT(c.studentList.size) FROM Course c")
     int countOfStudentsInCourse();
 
-
 }

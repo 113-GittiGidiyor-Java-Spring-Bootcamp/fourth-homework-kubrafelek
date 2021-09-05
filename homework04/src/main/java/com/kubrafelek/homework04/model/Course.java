@@ -24,6 +24,7 @@ public class Course extends AbstractBaseEntity{
     @ManyToOne
     private Instructor instructor;
 
-    @ManyToMany
+    @ManyToMany()
     private List<Student> studentList = new ArrayList<>();
+
 }

@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -27,9 +28,4 @@ public class Student extends AbstractBaseEntity {
     @ManyToMany
     private List<Course> courseList = new ArrayList<>();
 
-    @Override
-    public int calculateStudentAge() {
-        Period period = Period.between(birthdate, LocalDate.now());
-        return period.getYears();
-    }
 }

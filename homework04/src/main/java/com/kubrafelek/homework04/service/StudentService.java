@@ -2,6 +2,7 @@ package com.kubrafelek.homework04.service;
 
 import com.kubrafelek.homework04.dto.StudentDTO;
 import com.kubrafelek.homework04.exceptions.StudentNumberForOneCourseExceededException;
+import com.kubrafelek.homework04.mappers.CourseMapper;
 import com.kubrafelek.homework04.mappers.StudentMapper;
 import com.kubrafelek.homework04.model.Course;
 import com.kubrafelek.homework04.model.Student;
@@ -13,6 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,19 +28,29 @@ public class StudentService {
     private final CourseRepository courseRepository;
     private final StudentMapper studentMapper;
 
-    @Transactional
+    @Transactional(readOnly = true)
+    public List<Student> findAll() {
+        List<Student> studentList = new ArrayList<>();
+        Iterable<Student> studentIterable = studentRepository.findAll();
+        studentIterable.iterator().forEachRemaining(studentList::add);
+        return studentList;
+    }
+
     public Optional<Student> saveStudent(StudentDTO studentDTO) {
-        //Check the student age is valid for this function
+        //Checked the student age is valid for this function
         this.validateRequest(studentDTO);
 
         Student student = studentMapper.mapFromStudentDTOtoStudent(studentDTO);
-        if (courseRepository.countOfStudentsInCourse() > 20) {
-            throw new StudentNumberForOneCourseExceededException(ErrorMessageConstants.STUDENT_COUNT);
-        }
         return Optional.of(studentRepository.save(student));
     }
 
     private void validateRequest(StudentDTO studentDTO) {
-        StudentValidatorUtil.validateStudentAge(studentDTO.calculateStudentAge());
+        Period period = Period.between(studentDTO.getBirthdate(), LocalDate.now());
+        StudentValidatorUtil.validateStudentAge(period.getYears());
+    }
+
+    @Transactional
+    public Student findStudentById(long id) {
+        return studentRepository.findById(id).get();
     }
 }
