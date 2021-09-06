@@ -15,8 +15,12 @@ import com.kubrafelek.homework04.repository.StudentRepository;
 import com.kubrafelek.homework04.util.ErrorMessageConstants;
 import com.kubrafelek.homework04.util.StudentValidatorUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -31,7 +35,6 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
     private final CourseMapper courseMapper;
-    private final StudentMapper studentMapper;
 
     @Transactional
     public Optional<Course> saveCourse(CourseDTO courseDTO) {
@@ -46,17 +49,22 @@ public class CourseService {
     }
 
     @Transactional
-    public Optional<Course> saveStudentToCourse(long studentId, CourseDTO courseDTO) {
+    public Optional<Course> saveStudentToCourse(long studentId, int courseCode) {
 
         Student student = findStudentById(studentId);
 
-        Course course = courseMapper.mapFromCourseDTOtoCourse(courseDTO);
+        Course course = findCourseByCourseCode(courseCode);
         course.getStudentList().add(student);
 
-        if (courseRepository.countOfStudentsInCourse() > 20) {
+        if (course.getStudentList().size() > 20) {
             throw new StudentNumberForOneCourseExceededException(ErrorMessageConstants.STUDENT_COUNT);
         }
         return Optional.of(courseRepository.save(course));
+    }
+
+    @Transactional
+    public Course findCourseByCourseCode(int courseCode) {
+        return courseRepository.findCourseByCourseCode(courseCode);
     }
 
     @Transactional

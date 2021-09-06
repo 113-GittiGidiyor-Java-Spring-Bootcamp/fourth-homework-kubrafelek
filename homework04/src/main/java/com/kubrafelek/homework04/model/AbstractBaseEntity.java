@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Data
-@MappedSuperclass
+@MappedSuperclass //enity yani yeni bir sınıf olmaması içinn bu anotasyon kullanılır
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractBaseEntity {
 

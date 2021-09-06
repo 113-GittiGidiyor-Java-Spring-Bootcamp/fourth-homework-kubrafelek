@@ -25,14 +25,18 @@ public class CourseController {
         return new ResponseEntity(courseService.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/save-student-to-course/{courseId}")
-    public ResponseEntity<Course> saveStudentToCourse(@PathVariable long studentId, @RequestBody CourseDTO courseDTO) {
+    @PutMapping("/save-student-to-course/{studentId}/{courseCode}")
+    public ResponseEntity<Course> saveStudentToCourse(@PathVariable long studentId,@PathVariable int courseCode) {
 
-        Optional<Course> resultOptional = courseService.saveStudentToCourse(studentId, courseDTO);
+        Optional<Course> resultOptional = courseService.saveStudentToCourse(studentId, courseCode);
         if (resultOptional.isPresent()) {
             return new ResponseEntity<>(resultOptional.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/findByCourseCode/{courseCode}")
+    public ResponseEntity<Course> findCourseByCourseCode(@PathVariable int courseCode) {
+        return new ResponseEntity(courseService.findCourseByCourseCode(courseCode), HttpStatus.ACCEPTED);
     }
 
     //Get course by id

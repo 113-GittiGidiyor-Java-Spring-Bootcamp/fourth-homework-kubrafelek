@@ -1,6 +1,7 @@
 package com.kubrafelek.homework04.service;
 
 import com.kubrafelek.homework04.dto.StudentDTO;
+import com.kubrafelek.homework04.exceptions.StudentAgeNotValidException;
 import com.kubrafelek.homework04.exceptions.StudentNumberForOneCourseExceededException;
 import com.kubrafelek.homework04.mappers.CourseMapper;
 import com.kubrafelek.homework04.mappers.StudentMapper;
@@ -38,15 +39,13 @@ public class StudentService {
 
     public Optional<Student> saveStudent(StudentDTO studentDTO) {
         //Checked the student age is valid for this function
-        this.validateRequest(studentDTO);
+        Period studentPeriod = Period.between(studentDTO.getBirthdate(), LocalDate.now());
+        if(studentPeriod.getYears() < 18 || studentPeriod.getYears() > 40){
+               throw new StudentAgeNotValidException(ErrorMessageConstants.STUDENT_AGE);
+        }
 
         Student student = studentMapper.mapFromStudentDTOtoStudent(studentDTO);
         return Optional.of(studentRepository.save(student));
-    }
-
-    private void validateRequest(StudentDTO studentDTO) {
-        Period period = Period.between(studentDTO.getBirthdate(), LocalDate.now());
-        StudentValidatorUtil.validateStudentAge(period.getYears());
     }
 
     @Transactional
