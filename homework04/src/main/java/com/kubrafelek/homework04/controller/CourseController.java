@@ -29,6 +29,7 @@ public class CourseController {
         return new ResponseEntity(courseService.findAll(), HttpStatus.OK);
     }
 
+    //Save student to course
     @PutMapping("/save-student-to-course/{studentId}/{courseCode}")
     public ResponseEntity<Course> saveStudentToCourse(@PathVariable long studentId, @PathVariable int courseCode) {
 
@@ -39,13 +40,25 @@ public class CourseController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    //Save Instructor exist course
+    @PutMapping("save-instructor-to-course/{instructorId}/{courseCode}")
+    public ResponseEntity<Course> saveInstructorToCourse(@PathVariable long instructorId, @PathVariable int courseCode) {
+
+        Optional<Course> resultOptional = courseService.saveInstructorToCourse(instructorId, courseCode);
+        if (resultOptional.isPresent()) {
+            return new ResponseEntity<>(resultOptional.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    //Find Course by course code
     @GetMapping("/findByCourseCode/{courseCode}")
     public ResponseEntity<Course> findCourseByCourseCode(@PathVariable int courseCode) {
         return new ResponseEntity(courseService.findCourseByCourseCode(courseCode), HttpStatus.ACCEPTED);
     }
 
     //Get course by id
-    @GetMapping("/findcourseById/{id}")
+    @GetMapping("/findCourseById/{id}")
     public ResponseEntity<Course> findCourseById(@PathVariable int id) {
         return new ResponseEntity<>(courseService.findCourseById(id), HttpStatus.OK);
     }

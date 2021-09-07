@@ -1,6 +1,7 @@
 package com.kubrafelek.homework04.controller;
 
 import com.kubrafelek.homework04.dto.InstructorDTO;
+import com.kubrafelek.homework04.model.Course;
 import com.kubrafelek.homework04.model.Instructor;
 import com.kubrafelek.homework04.service.InstructorService;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +35,21 @@ public class InstructorController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    //Get instructor by id
+    @GetMapping("/findInstructorById/{id}")
+    public ResponseEntity<Instructor> findInstructorById(@PathVariable long id) {
+        return new ResponseEntity(instructorService.findInstructorById(id), HttpStatus.OK);
+    }
 
+    //Update exist instructor
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Instructor> updateInstructor(@RequestBody InstructorDTO instructorDTO, @PathVariable int id) {
+        return new ResponseEntity(instructorService.updateInstructor(instructorDTO, id), HttpStatus.ACCEPTED);
+    }
+
+    //Delete instructor by id
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Instructor> deleteIntructorById(@PathVariable long id) {
+        return new ResponseEntity(instructorService.deleteInstructorById(id), HttpStatus.ACCEPTED);
+    }
 }

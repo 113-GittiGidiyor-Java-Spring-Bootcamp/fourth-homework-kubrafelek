@@ -2,6 +2,7 @@ package com.kubrafelek.homework04.controller;
 
 import com.kubrafelek.homework04.dto.StudentDTO;
 import com.kubrafelek.homework04.model.Course;
+import com.kubrafelek.homework04.model.Instructor;
 import com.kubrafelek.homework04.model.Student;
 import com.kubrafelek.homework04.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,11 @@ public class StudentController {
             return new ResponseEntity<>(resultOptional.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    //Delete student by id
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Student> deleteStudentById(@PathVariable long id) {
+        return new ResponseEntity(studentService.deleteStudentById(id), HttpStatus.ACCEPTED);
     }
 }

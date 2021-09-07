@@ -5,10 +5,12 @@ import com.kubrafelek.homework04.exceptions.InstructorIsAlreadyExistException;
 import com.kubrafelek.homework04.exceptions.StudentNumberForOneCourseExceededException;
 import com.kubrafelek.homework04.mappers.CourseMapper;
 import com.kubrafelek.homework04.model.Course;
+import com.kubrafelek.homework04.model.Instructor;
 import com.kubrafelek.homework04.model.Student;
 import com.kubrafelek.homework04.model.TransactionLogger;
 import com.kubrafelek.homework04.model.enumeration.TransactionType;
 import com.kubrafelek.homework04.repository.CourseRepository;
+import com.kubrafelek.homework04.repository.InstructorRepository;
 import com.kubrafelek.homework04.repository.StudentRepository;
 import com.kubrafelek.homework04.repository.TransactionLoggerRepository;
 import com.kubrafelek.homework04.util.ClientRequestInfo;
@@ -34,6 +36,8 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
+    private final InstructorRepository instructorRepository;
+
     private final CourseMapper courseMapper;
     @Autowired
     private ClientRequestInfo clientRequestInfo;
@@ -71,6 +75,17 @@ public class CourseService {
         return Optional.of(courseRepository.save(course));
     }
 
+    //Add instructır to exist course
+    @Transactional
+    public Optional<Course> saveInstructorToCourse(long instructorId, int courseCode) {
+
+        Instructor instructor = findInstructorById(instructorId);
+        Course course = findCourseByCourseCode(courseCode);
+        course.setInstructor(instructor);
+
+        return Optional.of(courseRepository.save(course));
+    }
+
     private void saveTransactionToDatabase(Course course, int courseCode, Student student, TransactionType transactionType) {
         TransactionLogger transactionLogger = new TransactionLogger();
         transactionLogger.setCourseCode(courseCode);
@@ -95,6 +110,12 @@ public class CourseService {
     @Transactional
     public Student findStudentById(long id) {
         return studentRepository.findById(id).get();
+    }
+
+    //Find instructor wit id
+    @Transactional
+    public Instructor findInstructorById(long id) {
+        return instructorRepository.findById(id).get();
     }
 
     //List all recorded courses
@@ -128,5 +149,4 @@ public class CourseService {
         courseRepository.deleteById(id);
         return "Course id => " + id + " Deleted....";
     }
-
 }

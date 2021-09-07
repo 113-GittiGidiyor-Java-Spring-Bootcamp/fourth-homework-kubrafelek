@@ -3,6 +3,7 @@ package com.kubrafelek.homework04.service;
 import com.kubrafelek.homework04.dto.InstructorDTO;
 import com.kubrafelek.homework04.exceptions.InstructorIsAlreadyExistException;
 import com.kubrafelek.homework04.mappers.InstructorMapper;
+import com.kubrafelek.homework04.model.Course;
 import com.kubrafelek.homework04.model.Instructor;
 import com.kubrafelek.homework04.repository.InstructorRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,4 +40,24 @@ public class InstructorService {
         instructorIterable.iterator().forEachRemaining(instructorList::add);
         return instructorList;
     }
+
+    @Transactional
+    public Instructor findInstructorById(long id) {
+        return instructorRepository.findById(id).get();
+    }
+
+    @Transactional
+    public Instructor updateInstructor(InstructorDTO instructorDTO, long id) {
+        Instructor findInstructor = findInstructorById(id);
+        findInstructor.setName(instructorDTO.getName());
+        findInstructor.setAddress(instructorDTO.getAddress());
+        findInstructor.setPhoneNumber(instructorDTO.getPhoneNumber());
+        return instructorRepository.save(findInstructor);
+    }
+
+    public String deleteInstructorById(long id) {
+        instructorRepository.deleteById(id);
+        return "Instructor id => " + id + " Deleted....";
+    }
+
 }

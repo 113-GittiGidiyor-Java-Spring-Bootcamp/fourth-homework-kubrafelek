@@ -7,6 +7,3 @@
 ### 3- Abstract base entity ile model sınıfları birleştirildi.
 ### 4- DTO paketi altında model sınıfları entegre edildi.
 
-One(Instructor) "Interface" to Many(Course) "Mapper"
-Many(Student) "Mapper" to Many(Course)
-

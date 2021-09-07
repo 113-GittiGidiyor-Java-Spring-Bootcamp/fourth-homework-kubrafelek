@@ -40,8 +40,8 @@ public class StudentService {
     public Optional<Student> saveStudent(StudentDTO studentDTO) {
         //Checked the student age is valid for this function
         Period studentPeriod = Period.between(studentDTO.getBirthdate(), LocalDate.now());
-        if(studentPeriod.getYears() < 18 || studentPeriod.getYears() > 40){
-               throw new StudentAgeNotValidException(ErrorMessageConstants.STUDENT_AGE);
+        if (studentPeriod.getYears() < 18 || studentPeriod.getYears() > 40) {
+            throw new StudentAgeNotValidException(ErrorMessageConstants.STUDENT_AGE);
         }
 
         Student student = studentMapper.mapFromStudentDTOtoStudent(studentDTO);
@@ -51,5 +51,10 @@ public class StudentService {
     @Transactional
     public Student findStudentById(long id) {
         return studentRepository.findById(id).get();
+    }
+
+    public String deleteStudentById(long id) {
+        studentRepository.deleteById(id);
+        return "Student id " + id + " deleted.";
     }
 }
