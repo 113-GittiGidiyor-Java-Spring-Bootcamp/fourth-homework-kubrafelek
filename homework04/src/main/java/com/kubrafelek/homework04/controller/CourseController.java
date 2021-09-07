@@ -4,7 +4,11 @@ import com.kubrafelek.homework04.dto.CourseDTO;
 import com.kubrafelek.homework04.dto.StudentDTO;
 import com.kubrafelek.homework04.model.*;
 import com.kubrafelek.homework04.service.CourseService;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +30,7 @@ public class CourseController {
     }
 
     @PutMapping("/save-student-to-course/{studentId}/{courseCode}")
-    public ResponseEntity<Course> saveStudentToCourse(@PathVariable long studentId,@PathVariable int courseCode) {
+    public ResponseEntity<Course> saveStudentToCourse(@PathVariable long studentId, @PathVariable int courseCode) {
 
         Optional<Course> resultOptional = courseService.saveStudentToCourse(studentId, courseCode);
         if (resultOptional.isPresent()) {
@@ -34,6 +38,7 @@ public class CourseController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
     @GetMapping("/findByCourseCode/{courseCode}")
     public ResponseEntity<Course> findCourseByCourseCode(@PathVariable int courseCode) {
         return new ResponseEntity(courseService.findCourseByCourseCode(courseCode), HttpStatus.ACCEPTED);
