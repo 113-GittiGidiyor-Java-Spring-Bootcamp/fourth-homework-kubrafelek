@@ -73,8 +73,6 @@ public class GlobalExceptionHandler {
         exceptionsLogger.setMessage(message);
         exceptionsLogger.setStatus(httpStatus.value());
         exceptionsLogger.setExceptionType(exceptionType);
-
-        System.out.println("Course exception: " + exceptionType);
         exceptionsLogger.setExceptionDataTime(LocalDateTime.now());
         exceptionsLogger.setClientUrl(clientRequestInfo.getClientUrl());
         exceptionsLogger.setClientIpAddress(clientRequestInfo.getClientIpAddress());

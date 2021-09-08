@@ -1,6 +1,7 @@
 package com.kubrafelek.homework04.service;
 
 import com.kubrafelek.homework04.dto.CourseDTO;
+import com.kubrafelek.homework04.exceptions.CourseIsAlreadyExistException;
 import com.kubrafelek.homework04.exceptions.InstructorIsAlreadyExistException;
 import com.kubrafelek.homework04.exceptions.StudentNumberForOneCourseExceededException;
 import com.kubrafelek.homework04.mappers.CourseMapper;
@@ -50,7 +51,7 @@ public class CourseService {
 
         boolean isExists = courseRepository.selectExistsCourseCode(courseDTO.getCourseCode());
         if (isExists) {
-            throw new InstructorIsAlreadyExistException("Course " + courseDTO.getCourseName() + " code " + courseDTO.getCourseCode() + " is already exists !");
+            throw new CourseIsAlreadyExistException("Course " + courseDTO.getCourseName() + " code " + courseDTO.getCourseCode() + " is already exists !");
         }
 
         Course course = courseMapper.mapFromCourseDTOtoCourse(courseDTO);
