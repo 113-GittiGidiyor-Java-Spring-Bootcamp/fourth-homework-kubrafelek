@@ -19,12 +19,21 @@ public class InstructorController {
 
     private final InstructorService instructorService;
 
+    /**
+     * The method list all instructors
+     **/
     @GetMapping("/list-instructors")
     public ResponseEntity<List<Instructor>> findAll() {
         return new ResponseEntity(instructorService.findAll(), HttpStatus.OK);
     }
 
     //valid anotasyonu eklenmedi
+
+    /**
+     * The method add the new instructor.
+     *
+     * @param instructorDTO The instructor object
+     */
     @PostMapping("/add-instructor")
     public ResponseEntity<Instructor> addInstructor(@RequestBody InstructorDTO instructorDTO) {
 
@@ -35,19 +44,32 @@ public class InstructorController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    //Get instructor by id
+    /**
+     * The method find exist instructor by using instructor id.
+     *
+     * @param id The instructor id
+     */
     @GetMapping("/findInstructorById/{id}")
     public ResponseEntity<Instructor> findInstructorById(@PathVariable long id) {
         return new ResponseEntity(instructorService.findInstructorById(id), HttpStatus.OK);
     }
 
-    //Update exist instructor
+    /**
+     * The method updates exist instructor data by using id.
+     *
+     * @param instructorDTO The instructor object
+     * @param id            The instructor id
+     */
     @PutMapping("/update/{id}")
     public ResponseEntity<Instructor> updateInstructor(@RequestBody InstructorDTO instructorDTO, @PathVariable int id) {
         return new ResponseEntity(instructorService.updateInstructor(instructorDTO, id), HttpStatus.ACCEPTED);
     }
 
-    //Delete instructor by id
+    /**
+     * The method deletes exist instructor by using id.
+     *
+     * @param id The instructor id
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Instructor> deleteIntructorById(@PathVariable long id) {
         return new ResponseEntity(instructorService.deleteInstructorById(id), HttpStatus.ACCEPTED);

@@ -20,11 +20,19 @@ public class StudentController {
 
     private final StudentService studentService;
 
+    /**
+     * The method list all students
+     **/
     @GetMapping("/list-students")
     public ResponseEntity<List<Student>> findAll() {
         return new ResponseEntity(studentService.findAll(), HttpStatus.OK);
     }
 
+    /**
+     * The method add the new student.
+     *
+     * @param studentDTO The student object
+     */
     @PostMapping("/save-student")
     public ResponseEntity<Student> saveStudentToCourse(@RequestBody StudentDTO studentDTO) {
 
@@ -36,7 +44,11 @@ public class StudentController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    //Delete student by id
+    /**
+     * The method deletes exist student by using id.
+     *
+     * @param id The student id
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Student> deleteStudentById(@PathVariable long id) {
         return new ResponseEntity(studentService.deleteStudentById(id), HttpStatus.ACCEPTED);

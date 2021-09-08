@@ -23,13 +23,20 @@ public class CourseController {
 
     private final CourseService courseService;
 
-    //List all courses
+    /**
+     * The method list all courses
+     **/
     @GetMapping("/list-courses")
     public ResponseEntity<List<Course>> findAll() {
         return new ResponseEntity(courseService.findAll(), HttpStatus.OK);
     }
 
-    //Save student to course
+    /**
+     * The method add student to course by using chosen course code.
+     *
+     * @param courseCode The course code
+     * @param studentId  The Student's id.
+     */
     @PutMapping("/save-student-to-course/{studentId}/{courseCode}")
     public ResponseEntity<Course> saveStudentToCourse(@PathVariable long studentId, @PathVariable int courseCode) {
 
@@ -40,7 +47,12 @@ public class CourseController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    //Save Instructor exist course
+    /**
+     * The method save instructor to course by using chosen course code.
+     *
+     * @param courseCode   The course code
+     * @param instructorId The Instructor id.
+     */
     @PutMapping("save-instructor-to-course/{instructorId}/{courseCode}")
     public ResponseEntity<Course> saveInstructorToCourse(@PathVariable long instructorId, @PathVariable int courseCode) {
 
@@ -51,20 +63,33 @@ public class CourseController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    //Find Course by course code
+    /**
+     * The method find exist course by using course code.
+     *
+     * @param courseCode The course code
+     */
     @GetMapping("/findByCourseCode/{courseCode}")
     public ResponseEntity<Course> findCourseByCourseCode(@PathVariable int courseCode) {
         return new ResponseEntity(courseService.findCourseByCourseCode(courseCode), HttpStatus.ACCEPTED);
     }
 
-    //Get course by id
+    /**
+     * The method find exist course by using course id.
+     *
+     * @param id The course id
+     */
     @GetMapping("/findCourseById/{id}")
     public ResponseEntity<Course> findCourseById(@PathVariable int id) {
         return new ResponseEntity<>(courseService.findCourseById(id), HttpStatus.OK);
     }
 
-    //Add new course
     //FIX: valid anotasyonu eklenmedi
+
+    /**
+     * The method add the new course.
+     *
+     * @param courseDTO The course object
+     */
     @PostMapping("/add-course")
     public ResponseEntity addCourse(@RequestBody CourseDTO courseDTO) {
 
@@ -75,13 +100,22 @@ public class CourseController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    //Update exist course
+    /**
+     * The method updates exist course by using id.
+     *
+     * @param course The course object
+     * @param id     The course id
+     */
     @PutMapping("/update/{id}")
     public ResponseEntity<Course> updateCourse(@RequestBody Course course, @PathVariable int id) {
         return new ResponseEntity<>(courseService.update(course, id), HttpStatus.ACCEPTED);
     }
 
-    //Delete course by id
+    /**
+     * The method deletes exist course by using id.
+     *
+     * @param id The course id
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Course> deleteCourseById(@PathVariable long id) {
         return new ResponseEntity(courseService.deleteById(id), HttpStatus.ACCEPTED);
