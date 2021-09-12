@@ -31,16 +31,16 @@
 - MapStruct
 
 ### - Sistemde aynı telefon numarasına sahip 2 ayrı eğitmen bulunamaz.
-![](../ekran_görüntüleri/Ekran Resmi 2021-09-04 18.06.01.png)
+![](screenshots/Ekran%20Resmi%202021-09-12%2016.11.02.png)
 ---
 ### - Sistemde aynı ders koduna sahip 2 ayrı ders olamaz.
-![](../ekran_görüntüleri/Ekran Resmi 2021-09-07 18.01.42.png)
+![](screenshots/Ekran%20Resmi%202021-09-12%2016.09.37.png)
 ---
 ### - Öğrenci yaşı 18’den küçük, 40’tan büyük olamaz.
-![](../ekran_görüntüleri/Ekran Resmi 2021-09-06 10.45.59.png)
+![](screenshots/Ekran%20Resmi%202021-09-12%2016.09.37.png)
 ---
 ### - Bir dersi aynı anda en fazla 20 öğrenci alabilir. 21. öğrenci eklendiğinde bu hata ile karşılaşılır.
-![](../ekran_görüntüleri/Ekran Resmi 2021-09-07 18.35.02.png)
+![](screenshots/Ekran%20Resmi%202021-09-12%2016.12.50.png)
 ---
-### - İşlenen Hataların Database Kayıtlırı
-![](../ekran_görüntüleri/Ekran Resmi 2021-09-07 18.38.37.png)
+### - İşlenen Hataların Database Kayıtları
+![](screenshots/Ekran%20Resmi%202021-09-12%2016.13.49.png)
